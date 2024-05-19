@@ -26,7 +26,7 @@ ExtintorController:
 
 InspecaoExtintorController:
 
-• ET /inspecoes: Retorna todas as inspeções de extintores realizadas.
+• GET /inspecoes: Retorna todas as inspeções de extintores realizadas.
 
 • GET /inspecoes/{id}: Retorna uma inspeção específica com base no ID fornecido.
 
