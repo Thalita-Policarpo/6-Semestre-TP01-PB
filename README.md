@@ -8,6 +8,7 @@ Para realizar uma inspeção, é necessário que o extintor em questão já este
 
 # Endpoints:
 ExtintorController:
+
 • GET /extintor: Retorna todos os extintores cadastrados.
 
 • GET /extintor/{id}: Retorna um extintor específico com base no ID fornecido.
@@ -22,7 +23,9 @@ ExtintorController:
 
 
 
+
 InspecaoExtintorController:
+
 • ET /inspecoes: Retorna todas as inspeções de extintores realizadas.
 
 • GET /inspecoes/{id}: Retorna uma inspeção específica com base no ID fornecido.
