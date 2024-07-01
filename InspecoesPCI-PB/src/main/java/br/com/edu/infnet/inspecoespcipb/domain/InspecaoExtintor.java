@@ -35,6 +35,11 @@ public class InspecaoExtintor {
     @JsonBackReference
     private Extintor extintor;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    @JsonBackReference
+    private Usuario usuario;
+
     public InspecaoExtintor(boolean sinalizado, boolean desobstruido, boolean manometroPressaoAdequada, boolean gatilhoBoasCondicoes, boolean mangoteBoasCondicoes, boolean rotuloPinturaBoasCondicoes, boolean suporteBoasCondicoes, boolean lacreIntacto) {
         this.sinalizado = sinalizado;
         this.desobstruido = desobstruido;

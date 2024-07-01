@@ -1,6 +1,7 @@
 package br.com.edu.infnet.inspecoespcipb.service;
 
 import br.com.edu.infnet.inspecoespcipb.domain.Extintor;
+import br.com.edu.infnet.inspecoespcipb.dto.ExtintorDTO;
 import br.com.edu.infnet.inspecoespcipb.repository.ExtintorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,20 @@ public class ExtintorService {
                 .orElseThrow(() -> new IllegalArgumentException("Id inválido: " + id));
     }
 
-    public Extintor add(Extintor extintor){
-        if(extintorRepository.findByNumeroControleInterno(extintor.getNumeroControleInterno()).isPresent()){
+    public Extintor add(ExtintorDTO extintorDTO){
+        if(extintorRepository.findByNumeroControleInterno(extintorDTO.getNumeroControleInterno()).isPresent()){
             throw new IllegalArgumentException("Extintor com este número de controle interno já existe");
         }
+
+        Extintor extintor = new Extintor(
+                extintorDTO.getNumeroControleInterno(),
+                extintorDTO.getNumeroCilindro(),
+                extintorDTO.getNumeroSeloInmetro(),
+                extintorDTO.getCargaExtintora(),
+                extintorDTO.getCapacidade(),
+                extintorDTO.getDataVencimento(),
+                extintorDTO.getProximoTesteHidrostatico()
+        );
         return extintorRepository.save(extintor);
     }
 
@@ -42,13 +53,19 @@ public class ExtintorService {
         }
     }
 
-    public void update(int id, Extintor extintor) {
-        if(!extintorRepository.existsById(id)){
-            throw new IllegalArgumentException("Id inválido: " + id);
-        }else{
-            extintor.setId(id);
-            extintorRepository.save(extintor);
-        }
+    public void update(int id, ExtintorDTO extintorDTO) {
+        Extintor extintor = extintorRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Id inválido: " + id));
+
+        extintor.setNumeroControleInterno(extintorDTO.getNumeroControleInterno());
+        extintor.setNumeroCilindro(extintorDTO.getNumeroCilindro());
+        extintor.setNumeroSeloInmetro(extintorDTO.getNumeroSeloInmetro());
+        extintor.setCargaEsxtintora(extintorDTO.getCargaExtintora());
+        extintor.setCapacidade(extintorDTO.getCapacidade());
+        extintor.setDataVencimento(extintorDTO.getDataVencimento());
+        extintor.setProximoTesteHidrostatico(extintorDTO.getProximoTesteHidrostatico());
+
+        extintorRepository.save(extintor);
     }
 
     public Extintor getByNumeroControleInterno(int numeroControleInterno) {

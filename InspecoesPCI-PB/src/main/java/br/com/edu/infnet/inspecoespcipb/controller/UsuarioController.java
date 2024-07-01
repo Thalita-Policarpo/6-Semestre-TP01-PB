@@ -1,6 +1,7 @@
 package br.com.edu.infnet.inspecoespcipb.controller;
 
 import br.com.edu.infnet.inspecoespcipb.domain.Usuario;
+import br.com.edu.infnet.inspecoespcipb.dto.UsuarioDTO;
 import br.com.edu.infnet.inspecoespcipb.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -51,9 +52,9 @@ class UsuarioController {
             @ApiResponse(responseCode = "201", description = "Usuário incluído com sucesso"),
             @ApiResponse(responseCode = "409", description = "Conflito ao incluir usuário")
     })
-    public ResponseEntity<String> save(@RequestBody Usuario usuario) {
+    public ResponseEntity<String> save(@RequestBody UsuarioDTO usuarioDTO) {
         try {
-            usuarioService.add(usuario);
+            usuarioService.add(usuarioDTO);
             return new ResponseEntity<>("Usuário incluído com sucesso!", HttpStatus.CREATED);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
@@ -81,9 +82,9 @@ class UsuarioController {
             @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
-    public ResponseEntity<String> update(@PathVariable int id, @RequestBody Usuario usuario) {
+    public ResponseEntity<String> update(@PathVariable int id, @RequestBody UsuarioDTO usuarioDTO) {
         try {
-            usuarioService.update(id, usuario);
+            usuarioService.update(id, usuarioDTO);
             return new ResponseEntity<>("Usuário atualizado com sucesso!", HttpStatus.OK);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);

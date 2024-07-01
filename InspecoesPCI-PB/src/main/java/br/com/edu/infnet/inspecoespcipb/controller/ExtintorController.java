@@ -1,6 +1,7 @@
 package br.com.edu.infnet.inspecoespcipb.controller;
 
 import br.com.edu.infnet.inspecoespcipb.domain.Extintor;
+import br.com.edu.infnet.inspecoespcipb.dto.ExtintorDTO;
 import br.com.edu.infnet.inspecoespcipb.service.ExtintorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,9 +49,9 @@ public class ExtintorController {
     }
 
     @PostMapping
-    public ResponseEntity<String> save(@RequestBody Extintor extintor) {
+    public ResponseEntity<String> save(@RequestBody ExtintorDTO extintorDTO) {
         try {
-            extintorService.add(extintor);
+            extintorService.add(extintorDTO);
             return new ResponseEntity<>("Extintor incluído com sucesso!", HttpStatus.CREATED);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
@@ -68,9 +69,9 @@ public class ExtintorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable int id, @RequestBody Extintor extintor) {
+    public ResponseEntity<String> update(@PathVariable int id, @RequestBody ExtintorDTO extintorDTO) {
         try {
-            extintorService.update(id, extintor);
+            extintorService.update(id, extintorDTO);
             return new ResponseEntity<>("Extintor atualizado com sucesso!", HttpStatus.OK);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);

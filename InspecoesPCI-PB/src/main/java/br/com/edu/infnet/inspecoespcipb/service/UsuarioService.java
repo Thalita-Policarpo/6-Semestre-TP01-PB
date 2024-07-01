@@ -1,6 +1,7 @@
 package br.com.edu.infnet.inspecoespcipb.service;
 
 import br.com.edu.infnet.inspecoespcipb.domain.Usuario;
+import br.com.edu.infnet.inspecoespcipb.dto.UsuarioDTO;
 import br.com.edu.infnet.inspecoespcipb.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,16 @@ public class UsuarioService {
                 .orElseThrow(() -> new IllegalArgumentException("Id inválido: " + id));
     }
 
-    public Usuario add(Usuario usuario) {
-        if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
+    public Usuario add(UsuarioDTO usuarioDTO) {
+        if (usuarioRepository.findByEmail(usuarioDTO.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email já está em uso");
         }
+        Usuario usuario = new Usuario(
+                usuarioDTO.getNome(),
+                usuarioDTO.getEmail(),
+                usuarioDTO.getSenha(),
+                usuarioDTO.isAdmin()
+        );
         return usuarioRepository.save(usuario);
     }
 
@@ -37,13 +44,17 @@ public class UsuarioService {
         }
     }
 
-    public void update(int id, Usuario usuario) {
-        if (!usuarioRepository.existsById(id)) {
-            throw new IllegalArgumentException("Id inválido: " + id);
-        } else {
-            usuario.setId(id);
-            usuarioRepository.save(usuario);
-        }
+    public void update(int id, UsuarioDTO usuarioDTO) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Id inválido: " + id));
+
+        usuario.setNome(usuarioDTO.getNome());
+        usuario.setEmail(usuarioDTO.getEmail());
+        usuario.setSenha(usuarioDTO.getSenha());
+        usuario.setAdmin(usuarioDTO.isAdmin());
+
+        usuarioRepository.save(usuario);
+
     }
 
     public void validarAdministrador(int usuarioId) {
