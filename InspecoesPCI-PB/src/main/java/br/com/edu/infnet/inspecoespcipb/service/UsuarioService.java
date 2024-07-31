@@ -6,15 +6,25 @@ import br.com.edu.infnet.inspecoespcipb.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import java.util.List;
 
 @Service
 public class UsuarioService {
+    private static final Logger log = Logger.getLogger(UsuarioService.class.getName());
 
     @Autowired
     private UsuarioRepository usuarioRepository;
 
     public List<Usuario> getAll() {
+
+        if (usuarioRepository.findAll().isEmpty()) {
+            log.info("Não existem usuário cadastrados.");
+            throw new IllegalArgumentException("Não existe nenhum usuário cadastrado no momento!");
+        }
+        log.info("Listanto todos os usuários");
         return usuarioRepository.findAll();
     }
 

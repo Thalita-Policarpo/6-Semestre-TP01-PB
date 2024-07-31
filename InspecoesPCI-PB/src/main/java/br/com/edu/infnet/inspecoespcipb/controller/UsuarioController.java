@@ -27,8 +27,12 @@ class UsuarioController {
             @ApiResponse(responseCode = "400", description = "Requisição inválida")
     })
     public ResponseEntity<?> getAll() {
-        Collection<Usuario> usuarios = usuarioService.getAll();
-        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+        try{
+            Collection<Usuario> usuarios = usuarioService.getAll();
+            return new ResponseEntity<>(usuarios, HttpStatus.OK);
+        } catch (IllegalArgumentException ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.OK);
+        }
     }
 
     @GetMapping("/{id}")
