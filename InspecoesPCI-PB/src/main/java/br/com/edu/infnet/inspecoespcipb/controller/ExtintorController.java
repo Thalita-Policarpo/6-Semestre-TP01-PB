@@ -1,6 +1,7 @@
 package br.com.edu.infnet.inspecoespcipb.controller;
 
 import br.com.edu.infnet.inspecoespcipb.domain.Extintor;
+import br.com.edu.infnet.inspecoespcipb.domain.ExtintorHistorico;
 import br.com.edu.infnet.inspecoespcipb.dto.ExtintorDTO;
 import br.com.edu.infnet.inspecoespcipb.service.ExtintorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/extintor")
@@ -75,6 +77,19 @@ public class ExtintorController {
             return new ResponseEntity<>("Extintor atualizado com sucesso!", HttpStatus.OK);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/historico/{numeroControleInterno}")
+    public ResponseEntity<?> getHistoricoByNumeroControleInterno(@PathVariable int numeroControleInterno) {
+        try {
+            List<ExtintorHistorico> historico = extintorService.getHistoricoByNumeroControleInterno(numeroControleInterno);
+            if (historico.isEmpty()) {
+                return new ResponseEntity<>("Nenhum histórico encontrado para este número de controle interno.", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(historico, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -1,7 +1,9 @@
 package br.com.edu.infnet.inspecoespcipb.service;
 
 import br.com.edu.infnet.inspecoespcipb.domain.Extintor;
+import br.com.edu.infnet.inspecoespcipb.domain.ExtintorHistorico;
 import br.com.edu.infnet.inspecoespcipb.dto.ExtintorDTO;
+import br.com.edu.infnet.inspecoespcipb.repository.ExtintorHistoricoRepository;
 import br.com.edu.infnet.inspecoespcipb.repository.ExtintorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ public class ExtintorService {
     @Autowired
     private ExtintorRepository extintorRepository;
 
+    @Autowired
+    private ExtintorHistoricoRepository extintorHistoricoRepository;
 
     public List<Extintor> getAll() {
         List<Extintor> extintores = extintorRepository.findAll();
@@ -42,15 +46,24 @@ public class ExtintorService {
                 extintorDTO.getDataVencimento(),
                 extintorDTO.getProximoTesteHidrostatico()
         );
-        return extintorRepository.save(extintor);
+
+        Extintor savedExtintor = extintorRepository.save(extintor);
+        // Registrar histórico
+        ExtintorHistorico historico = new ExtintorHistorico(savedExtintor, "CREATE");
+        extintorHistoricoRepository.save(historico);
+
+        return savedExtintor;
     }
 
     public void deleteById(int id) {
-        if(!extintorRepository.existsById(id)){
-            throw new IllegalArgumentException("Id inválido: " + id);
-        }else{
-            extintorRepository.deleteById(id);
-        }
+        Extintor extintor = extintorRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Id inválido: " + id));
+
+        extintorRepository.deleteById(id);
+
+        // Registrar histórico
+        ExtintorHistorico historico = new ExtintorHistorico(extintor, "DELETE");
+        extintorHistoricoRepository.save(historico);
     }
 
     public void update(int id, ExtintorDTO extintorDTO) {
@@ -65,11 +78,19 @@ public class ExtintorService {
         extintor.setDataVencimento(extintorDTO.getDataVencimento());
         extintor.setProximoTesteHidrostatico(extintorDTO.getProximoTesteHidrostatico());
 
-        extintorRepository.save(extintor);
+        Extintor updatedExtintor = extintorRepository.save(extintor);
+
+        // Registrar histórico
+        ExtintorHistorico historico = new ExtintorHistorico(updatedExtintor, "UPDATE");
+        extintorHistoricoRepository.save(historico);
     }
 
     public Extintor getByNumeroControleInterno(int numeroControleInterno) {
         return extintorRepository.findByNumeroControleInterno(numeroControleInterno)
                 .orElseThrow(() -> new IllegalArgumentException("Número de controle interno inválido: " + numeroControleInterno));
+    }
+
+    public List<ExtintorHistorico> getHistoricoByNumeroControleInterno(int numeroControleInterno) {
+        return extintorHistoricoRepository.findByNumeroControleInterno(numeroControleInterno);
     }
 }
