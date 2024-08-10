@@ -1,8 +1,9 @@
 server:
   port: 8080
+
 spring:
   datasource:
-    url: jdbc:h2:mem:inspecoespci-pb
+    url: jdbc:h2:mem:inspecoespci-pb;DB_CLOSE_DELAY=-1
     username: sa
     password: 123456
     driver-class-name: org.h2.Driver

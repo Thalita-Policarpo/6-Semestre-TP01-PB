@@ -26,7 +26,7 @@ public class ExtintorHistorico {
     private Year proximoTesteHidrostatico;
 
     private LocalDateTime dataAlteracao;
-    private String usuarioAlteracao;
+    //private String usuarioAlteracao;
     private String tipoOperacao; // CREATE, UPDATE, DELETE
 
     @ManyToOne
@@ -42,7 +42,7 @@ public class ExtintorHistorico {
         this.dataVencimento = extintor.getDataVencimento();
         this.proximoTesteHidrostatico = extintor.getProximoTesteHidrostatico();
         this.dataAlteracao = LocalDateTime.now();
-        this.usuarioAlteracao = usuarioAlteracao;
+        //this.usuarioAlteracao = usuarioAlteracao;
         this.tipoOperacao = tipoOperacao;
         this.extintor = extintor;
     }

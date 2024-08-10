@@ -30,7 +30,6 @@ public class Extintor {
     private List<InspecaoExtintor> inspecoes;
 
     public Extintor(int numeroControleInterno, String numeroCilindro, String numeroSeloInmetro, String cargaEsxtintora, String capacidade, YearMonth dataVencimento, Year proximoTesteHidrostatico) {
-        this.id = id;
         this.numeroControleInterno = numeroControleInterno;
         this.numeroCilindro = numeroCilindro;
         this.numeroSeloInmetro = numeroSeloInmetro;
