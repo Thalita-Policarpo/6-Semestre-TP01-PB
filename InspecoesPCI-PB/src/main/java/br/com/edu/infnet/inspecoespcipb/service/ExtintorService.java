@@ -73,7 +73,7 @@ public class ExtintorService {
         extintor.setNumeroControleInterno(extintorDTO.getNumeroControleInterno());
         extintor.setNumeroCilindro(extintorDTO.getNumeroCilindro());
         extintor.setNumeroSeloInmetro(extintorDTO.getNumeroSeloInmetro());
-        extintor.setCargaEsxtintora(extintorDTO.getCargaExtintora());
+        extintor.setCargaExtintora(extintorDTO.getCargaExtintora());
         extintor.setCapacidade(extintorDTO.getCapacidade());
         extintor.setDataVencimento(extintorDTO.getDataVencimento());
         extintor.setProximoTesteHidrostatico(extintorDTO.getProximoTesteHidrostatico());
