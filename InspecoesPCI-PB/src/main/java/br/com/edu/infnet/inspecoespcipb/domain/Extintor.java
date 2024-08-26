@@ -20,7 +20,7 @@ public class Extintor {
     private int numeroControleInterno;
     private String numeroCilindro;
     private String numeroSeloInmetro;
-    private String cargaEsxtintora;
+    private String cargaExtintora;
     private String capacidade;
     private YearMonth dataVencimento; // apenas mes e ano
     private Year proximoTesteHidrostatico; // apena o ano
@@ -33,7 +33,7 @@ public class Extintor {
         this.numeroControleInterno = numeroControleInterno;
         this.numeroCilindro = numeroCilindro;
         this.numeroSeloInmetro = numeroSeloInmetro;
-        this.cargaEsxtintora = cargaEsxtintora;
+        this.cargaExtintora = cargaEsxtintora;
         this.capacidade = capacidade;
         this.dataVencimento = dataVencimento;
         this.proximoTesteHidrostatico = proximoTesteHidrostatico;
